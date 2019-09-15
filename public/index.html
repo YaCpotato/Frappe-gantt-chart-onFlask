@@ -1,0 +1,85 @@
+<!--require frappe.js and css-->
+<html lang="en">
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/frappe-gantt/0.3.0/frappe-gantt.js"></script>
+    <link rel='stylesheet' href='https://unpkg.com/v-calendar/lib/v-calendar.min.css'>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/frappe-gantt/0.3.0/frappe-gantt.css'>
+    <script src='https://unpkg.com/v-calendar'></script>
+  </head>
+<body>
+
+  <button id="start-gantt">StartGantt</button>
+<div id="app">
+  <li v-for="task in tasks">
+    <span>{{ task.progress }}</span>
+    <span>{{ task.name }}</span>
+    <span>{{ task.start }}</span>
+    <span>{{ task.end }}</span>
+  </li>
+  <input v-model="id" placeholder="instant id"><input v-model="name" placeholder="name">
+  開始日<v-date-picker :mode="'single'"
+               :formats="formats"
+               v-model="start"></v-date-picker>
+  終了日<v-date-picker :mode="'single'"
+               :formats="formats"
+               v-model="end"></v-date-picker>
+  <button @click="regist">登録</button>
+</div><br>
+<svg id="gantt"></svg>
+
+<script>
+var app = new Vue({
+  el:'#app',
+  data:{
+    gantt:{},
+    tasks : [],
+    id:null,
+    name:'',
+    start:'',
+    end:'',
+    formats: {
+        input: ['YYYY年M月D日'],
+        data: ['YYYY-MM-DD']
+    },
+  },
+  methods:{
+    regist:function(){
+      this.tasks.push({
+        id: this.id,
+        name: this.name,
+        start: moment(this.start).format('YYYY-MM-DD'),
+        end: moment(this.end).format('YYYY-MM-DD'),
+        progress: 20,
+      })
+      gantt.refresh(this.tasks)
+    },
+  },
+})
+
+ document.getElementById("start-gantt").onclick = function() {
+   if(app.tasks.length >= 1){
+   var gantt = new Gantt("#gantt", app.tasks,{
+        on_date_change: function(task, start, end) {
+           for(var i=0;i<app.tasks.length;i++){
+             if(app.tasks[i].id == task.id){
+               var item={
+                 name:task.name,
+                 start : moment(start).format('YYYY-MM-DD'),
+                 end : moment(end).format('YYYY-MM-DD'),
+                 progress : task.progress
+               }
+               app.tasks.splice(i,1,item)
+               gantt.refresh(app.tasks)
+             }
+           }
+        },
+ });
+ }else{
+   alert('まずはタスクの登録をしてください');
+ }
+};
+</script>
+</body>
+</html>
