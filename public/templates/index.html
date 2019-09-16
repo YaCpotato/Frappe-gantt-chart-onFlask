@@ -43,6 +43,11 @@ Vue.use(window["vue-js-modal"].default);
                   :formats="formats"
                   v-model="end"
                   ></v-date-picker>
+      <select v-model="dependencies" v-on:change="call()">
+        <option v-for="task in tasks" v-bind:value="task.id">
+          {{ task.name }}
+        </option>
+      </select>
     </p>
     <p class="modal-footer">
         <button class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" v-show="id && name && start && end" @click="regist">
@@ -75,6 +80,7 @@ var app = new Vue({
     name:'',
     start:'',
     end:'',
+    dependencies:'',
     formats: {
         input: ['YYYY年M月D日'],
         data: ['YYYY-MM-DD']
@@ -88,6 +94,7 @@ var app = new Vue({
         start: moment(this.start).format('YYYY-MM-DD'),
         end: moment(this.end).format('YYYY-MM-DD'),
         progress: 20,
+        dependencies: this.dependencies
       })
       if(gantt){
       gantt.refresh(this.tasks)
@@ -101,6 +108,9 @@ var app = new Vue({
     hide : function () {
       this.$modal.hide('task-modal');
     },
+    call:function(){
+      console.log(this.dependencies)
+    }
   },
 })
 
@@ -111,10 +121,12 @@ var app = new Vue({
            for(var i=0;i<app.tasks.length;i++){
              if(app.tasks[i].id == task.id){
                var item={
+                 id: task.id,
                  name:task.name,
                  start : moment(start).format('YYYY-MM-DD'),
                  end : moment(end).format('YYYY-MM-DD'),
-                 progress : task.progress
+                 progress : task.progress,
+                 dependencies : task.dependencies
                }
                app.tasks.splice(i,1,item)
                gantt.refresh(app.tasks)
@@ -127,6 +139,7 @@ var app = new Vue({
  }
 };
 </script>
+
 </body>
 <style>
 
