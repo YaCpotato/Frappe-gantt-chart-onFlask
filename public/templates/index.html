@@ -9,16 +9,11 @@
     <script src='https://unpkg.com/v-calendar'></script>
   </head>
 <body>
-
-  <button id="start-gantt">StartGantt</button>
+<h1 class="title">研究進捗管理</h1>
+<button id="start-gantt">StartGantt</button>
 <div id="app">
-  <li v-for="task in tasks">
-    <span>{{ task.progress }}</span>
-    <span>{{ task.name }}</span>
-    <span>{{ task.start }}</span>
-    <span>{{ task.end }}</span>
-  </li>
-  <input v-model="id" placeholder="instant id"><input v-model="name" placeholder="name">
+  <input v-model="id" placeholder="instant id">
+  <input v-model="name" placeholder="name">
   開始日<v-date-picker :mode="'single'"
                :formats="formats"
                v-model="start"></v-date-picker>
@@ -26,10 +21,18 @@
                :formats="formats"
                v-model="end"></v-date-picker>
   <button @click="regist">登録</button>
+  <span id="list">
+<li v-for="task in tasks">
+    <span>{{ task.progress }}</span>
+    <span>{{ task.name }}</span>
+    <span>{{ task.start }}</span>
+    <span>{{ task.end }}</span>
+</li>
+</span>
 </div><br>
 <svg id="gantt"></svg>
-
 <script>
+var gantt;
 var app = new Vue({
   el:'#app',
   data:{
@@ -53,14 +56,16 @@ var app = new Vue({
         end: moment(this.end).format('YYYY-MM-DD'),
         progress: 20,
       })
+      if(gantt){
       gantt.refresh(this.tasks)
+      }
     },
   },
 })
 
  document.getElementById("start-gantt").onclick = function() {
    if(app.tasks.length >= 1){
-   var gantt = new Gantt("#gantt", app.tasks,{
+   gantt = new Gantt("#gantt", app.tasks,{
         on_date_change: function(task, start, end) {
            for(var i=0;i<app.tasks.length;i++){
              if(app.tasks[i].id == task.id){
@@ -82,4 +87,9 @@ var app = new Vue({
 };
 </script>
 </body>
+<style>
+.title{
+  font-size: 30px;
+}
+</style>
 </html>
