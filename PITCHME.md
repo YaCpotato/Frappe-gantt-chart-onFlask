@@ -3,5 +3,9 @@
 ---
 
 ### Who am I?
-@box[text-orange span-80](大学生)
+@box[bg-black text-orange span-80](
+    ニックネーム：やっしー  
+    Twitter : @Yasshieeee  
+    Qiita,github : YaCpotato  
+)
 ---
