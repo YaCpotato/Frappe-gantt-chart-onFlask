@@ -1,12 +1,16 @@
-# FlaskバックエンドのガントチャートWebアプリ作成
+# Frappe gantt chart on Flask
+This app used for manage tasks when I was student.
+![all.png](./all.png)
 
-require
+### Components
+- task list
+- gantt chart
 
-Flask 1.1.0
+#### task list
+![list.png](./list.png)
+#### gantt chart
+![gantt.png](./gantt.png)
 
-js系は全てCDN経由でインストールしています。
-
-
-
-# 残チケ
-* Vuex-orm接続
+### Development schedule
+- To make model and manage database
+- To fix modal layout,style

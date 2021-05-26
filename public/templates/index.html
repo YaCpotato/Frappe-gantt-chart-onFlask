@@ -18,7 +18,7 @@
 Vue.use(window["vue-js-modal"].default);
 </script>
 <div class="header">
-<div class="title">My Research Progress Manager</div>
+<div class="title">Daily TODO List with gantt chart</div>
 </div>
 <div id="app">
 <button class="bg-white-500 text-black font-bold py-2 px-4 border border-red-700 rounded" @click="show">タスク追加</button>
@@ -26,33 +26,44 @@ Vue.use(window["vue-js-modal"].default);
         name="task-modal" 
         :draggable="true"
         height=80%>
-    <p class="modal-header">
+    <div class="modal-header">
         Task Adding...
-    </p>
-    <p class="modal-body">
-      <input class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-30 appearance-none leading-normal" v-model="id" placeholder="instant id">
-      <input class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-30 appearance-none leading-normal" v-model="name" placeholder="name">
+    </div>
+    <div class="modal-body">
+      <input class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 m-4 block w-30 appearance-none leading-normal" v-model="id" placeholder="instant id">
+      <input class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 m-4 block w-30 appearance-none leading-normal" v-model="name" placeholder="name">
       開始日
       <v-date-picker class="datepicker" :mode="'single'"
                   :formats="formats"
                   v-model="start"
-                  ></v-date-picker>
+                  >
+                  <template v-slot="{ inputValue, inputEvents }">
+                    <input
+                      class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300"
+                      :value="inputValue"
+                      v-on="inputEvents"
+                    />
+                  </template>
+                </v-date-picker>
       終了日
       <v-date-picker class="datepicker" :mode="'single'"
                   :formats="formats"
                   v-model="end"
-                  ></v-date-picker>
-      <select v-model="dependencies" v-on:change="call()">
-        <option v-for="task in tasks" v-bind:value="task.id">
-          {{ task.name }}
-        </option>
-      </select>
-    </p>
-    <p class="modal-footer">
-        <button class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" v-show="id && name && start && end" @click="regist">
+                  >
+                  <template v-slot="{ inputValue, inputEvents }">
+                    <input
+                      class="px-2 py-1 border rounded focus:outline-none focus:border-blue-300"
+                      :value="inputValue"
+                      v-on="inputEvents"
+                    />
+                  </template>
+                </v-date-picker>
+    </div>
+    <div class="modal-footer">
+        <button class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" @click="regist">
           登録
         </button>
-    </p>
+      </div>
 </modal>
 <table id="task-table" class="text-left w-full border-collapse">
   <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Name</th>
