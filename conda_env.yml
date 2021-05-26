@@ -1,0 +1,28 @@
+name: python38-frappe-gantt
+channels:
+  - anaconda
+  - conda-forge
+dependencies:
+  - ca-certificates=2020.12.5=h4653dfc_0
+  - certifi=2020.12.5=py38h10201cd_1
+  - click=7.1.2=py_0
+  - flask=1.1.2=py_0
+  - itsdangerous=1.1.0=py_0
+  - jinja2=2.11.2=py_0
+  - libcxx=11.1.0=h168391b_0
+  - libffi=3.3=h9f76cd9_2
+  - markupsafe=2.0.1=py38hea4295b_0
+  - ncurses=6.2=h9aa5885_4
+  - openssl=1.1.1k=h27ca646_0
+  - pip=21.1.2=pyhd8ed1ab_0
+  - python=3.8.10=hf9733c0_1_cpython
+  - python_abi=3.8=1_cp38
+  - readline=8.1=hedafd6a_0
+  - setuptools=49.6.0=py38h10201cd_3
+  - sqlite=3.35.5=hc49ca36_0
+  - tk=8.6.10=hf7e6567_1
+  - werkzeug=1.0.1=py_0
+  - wheel=0.36.2=pyhd3deb0d_0
+  - xz=5.2.5=h642e427_1
+  - zlib=1.2.11=h31e879b_1009
+prefix: /Users/yashiroshoichi/miniforge3/envs/python38-frappe-gantt
